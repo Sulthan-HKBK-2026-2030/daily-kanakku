@@ -1,0 +1,32 @@
+{
+ "id": "./",
+ "name": "Daily Kanakku",
+ "short_name": "Kanakku",
+ "description": "Daily grocery, Goli soda and finance tracker",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#f6f3e9",
+ "theme_color": "#1f7a3d",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}

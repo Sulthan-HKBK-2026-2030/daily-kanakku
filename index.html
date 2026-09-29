@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#1f7a3d"><link rel="icon" href="icon-192.png"><title>Daily Kanakku – கணக்கு</title>
+<style>
+:root{--bg:#f6f3e9;--card:#fff;--ink:#1d2b1f;--mut:#667066;--g:#1f7a3d;--gl:#dff1e3;--y:#f2b705;--r:#c62828;--line:#e3dfd0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a14;--card:#1c271f;--ink:#eef3ee;--mut:#9aa89b;--g:#4cc26f;--gl:#22402b;--line:#2b3a2e}}
+:root[data-theme="dark"]{--bg:#121a14;--card:#1c271f;--ink:#eef3ee;--mut:#9aa89b;--g:#4cc26f;--gl:#22402b;--line:#2b3a2e}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans Tamil","Segoe UI",system-ui,sans-serif;font-size:17px;padding-bottom:84px}
+h1{font-size:22px;margin:0;padding:14px 16px 4px}
+.sub{padding:0 16px 8px;color:var(--mut);font-size:14px}
+.wrap{padding:8px 14px;max-width:560px;margin:auto}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:10px 4px;text-align:center;cursor:pointer;color:var(--ink);font:inherit}
+.tile:active{background:var(--gl)}
+.tile .e{font-size:44px;line-height:1.1;display:block}
+.tile b{display:block;font-size:15px}.tile small{color:var(--mut);font-size:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}
+input,select{font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:10px;width:100%}
+input:focus,button:focus-visible{outline:3px solid var(--y)}
+.btn{font:inherit;font-weight:700;border:0;border-radius:14px;padding:13px 16px;background:var(--g);color:#fff;cursor:pointer;width:100%}
+.btn.o{background:var(--gl);color:var(--g)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{font:inherit;border:2px solid var(--g);background:var(--card);color:var(--g);border-radius:999px;padding:9px 14px;font-weight:700;cursor:pointer}
+.chip.on{background:var(--g);color:#fff}
+.big{font-size:34px;font-weight:800}
+.in{color:var(--g)}.out{color:var(--r)}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav button{flex:1;border:0;background:none;font:inherit;font-size:11px;color:var(--mut);padding:8px 0;cursor:pointer}
+nav button span{display:block;font-size:24px}
+nav button.on{color:var(--g);font-weight:700}
+.sheet{position:fixed;inset:0;background:#0007;display:none;align-items:flex-end;z-index:5}
+.sheet.show{display:flex}
+.sheet>div{background:var(--card);width:100%;max-width:560px;margin:auto;border-radius:22px 22px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.x{background:none;border:0;color:var(--r);font-size:22px;cursor:pointer}
+.sodabtn{width:88px;height:88px;border-radius:50%;border:0;font-size:44px;font-weight:800;color:#fff;background:var(--g);cursor:pointer}
+.sodabtn.m{background:var(--r)}
+.tc{text-align:center}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.keys button{font:inherit;font-size:22px;padding:14px 0;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.tbl{overflow-x:auto}.auth{position:fixed;inset:0;background:var(--bg);z-index:20;overflow:auto;display:none}.lnk{font:inherit;font-size:13px;border:0;background:none;color:var(--g);text-decoration:underline;cursor:pointer}.bn{margin:6px 14px;padding:10px 12px;border-radius:14px;background:var(--y);color:#1d2b1f;display:flex;gap:8px;align-items:center;justify-content:space-between;font-weight:700}.bn button{font:inherit;font-weight:800;border:0;border-radius:10px;padding:8px 12px;background:#1d2b1f;color:#fff;cursor:pointer}.secs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}.sec{font:inherit;font-size:12px;font-weight:700;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:8px 2px;cursor:pointer}.sec span{display:block;font-size:26px}.sec small{font-weight:400;color:var(--mut)}.sec.on{border-color:var(--g);background:var(--gl)}.hd{font-weight:800;margin:16px 2px 0;font-size:18px}
+</style>
+</head>
+<body>
+<h1 id="ttl"></h1><div class="sub" id="dt"></div><div id="bn"></div>
+<div class="wrap" id="app"></div>
+<div class="sheet" id="sheet"><div id="sh"></div></div>
+<div class="auth" id="auth"></div>
+<nav id="nav"></nav>
+<script>
+var K='dailyKanakku2',TABS=[['buy','🛒','Buy · வாங்க'],['price','🏷️','Prices · விலை'],['soda','🥤','Soda · சோடா'],['today','📊','Today · இன்று'],['fin','💰','Finance · நிதி'],['calc','🧮','Calc · கணக்கு']];
+var CATS=[['v','🥬','Vegetables','காய்கறி'],['f','🍎','Fruits','பழங்கள்'],['g','🌾','Groceries','மளிகை'],['o','🧼','Others','மற்றவை']],cat='v';
+var RAW=['Onion|வெங்காயம்|🧅|40|v',
+'Potato|உருளைக்கிழங்கு|🥔|40|v',
+'Garlic|பூண்டு|🧄|200|v',
+'Tomato|தக்காளி|🍅|30|v',
+'Ginger|இஞ்சி|🌱|120|v',
+'Green Chilli|பச்சை மிளகாய்|🌶️|80|v',
+'Carrot|கேரட்|🥕|60|v',
+'Beans|பீன்ஸ்|🟢|70|v',
+'Brinjal|கத்தரிக்காய்|🍆|50|v',
+'Curry Leaves|கறிவேப்பிலை|🌿|100|v',
+'Coriander|கொத்தமல்லி|🌿|80|v',
+'Mint|புதினா|🍃|80|v',
+'Bottle Gourd|சுரைக்காய்|🥒|40|v',
+'Zucchini|சுகினி|🥒|80|v',
+'Apple|ஆப்பிள்|🍎|180|f',
+'Banana|வாழைப்பழம்|🍌|60|f',
+'Grapes|திராட்சை|🍇|100|f',
+'Orange|ஆரஞ்சு|🍊|80|f',
+'Lemon|எலுமிச்சை|🍋|100|f',
+'Kiwi|கிவி|🥝|300|f',
+'Papaya|பப்பாளி|🍈|50|f',
+'Ponni Rice|பொன்னி அரிசி|🍚|60|g',
+'Basmati Rice|பாஸ்மதி அரிசி|🍚|120|g',
+'Idli Rice|இட்லி அரிசி|🍚|50|g',
+'Atta|கோதுமை மாவு|🌾|45|g',
+'Toor Dal|துவரம் பருப்பு|🟡|150|g',
+'Urad Dal|உளுத்தம் பருப்பு|⚪|130|g',
+'Moong Dal|பாசிப்பருப்பு|🟢|120|g',
+'Chana Dal|கடலைப் பருப்பு|🟠|90|g',
+'Sunflower Oil|சூரியகாந்தி எண்ணெய்|🌻|140|g|L',
+'Goldwinner Oil|கோல்டு வின்னர் எண்ணெய்|🛢️|150|g|L',
+'Coconut Oil|தேங்காய் எண்ணெய்|🥥|220|g|L',
+'Ghee|நெய்|🧈|600|g',
+'Salt|உப்பு|🧂|20|g',
+'Crystal Salt|கல் உப்பு|🧂|25|g',
+'Sugar|சர்க்கரை|🍬|45|g',
+'Jaggery|வெல்லம்|🟤|80|g',
+'Tamarind|புளி|🟫|200|g',
+'Turmeric Powder|மஞ்சள் தூள்|🟡|200|g',
+'Chilli Powder|மிளகாய் தூள்|🌶️|250|g',
+'Mustard Seeds|கடுகு|⚫|120|g',
+'Cumin Seeds|சீரகம்|🌰|400|g',
+'Hing|பெருங்காயம்|🥄|1500|g',
+'Garam Masala|கரம் மசாலா|🍲|500|g',
+'Semiya|சேமியா|🍜|80|g',
+'Rava|ரவை|🥣|55|g',
+'Noodles|நூடுல்ஸ்|🍜|15|g|pc',
+'Tea Dust|தேயிலை தூள்|🍵|400|g',
+'Coffee Powder|காபி தூள்|☕|600|g',
+'Milk|பால்|🥛|56|o|L',
+'Curd|தயிர்|🥣|70|o',
+'Butter|வெண்ணெய்|🧈|500|o',
+'Paneer|பனீர்|🧀|350|o',
+'Dishwash|பாத்திரம் கழுவும் திரவம்|🧴|99|o|pc',
+'Detergent|சலவை தூள்|🧺|120|o|pc',
+'Floor Cleaner|தரை சுத்தம்|🧹|110|o|pc',
+'Toilet Cleaner|கழிப்பறை சுத்தம்|🚽|90|o|pc',
+'Handwash|கை கழுவும் திரவம்|🧼|60|o|pc',
+'Bath Soap|குளியல் சோப்பு|🧼|40|o|pc',
+'Toothpaste|பற்பசை|🪥|80|o|pc',
+'Shampoo|ஷாம்பு|🧴|150|o|pc'];
+var S,tab='buy',sel=null,gm=0,UK=K,AM='in',MT;
+function load(){try{var s=JSON.parse(localStorage.getItem(UK));if(s&&s.items)return s}catch(e){}
+var o={};try{o=JSON.parse(localStorage.getItem('dailyKanakku1'))||{}}catch(e){}
+var op={};(o.items||[]).forEach(function(i){op[i.n]=i.p});
+return{items:RAW.map(function(r,i){var a=r.split('|');return{id:i,n:a[0],t:a[1],e:a[2],p:op[a[0]]!=null?op[a[0]]:Number(a[3]),c:a[4],u:a[5]||'kg'}}),buys:o.buys||[],soda:o.soda||{},sp:o.sp||7}}
+function save(){try{localStorage.setItem(UK,JSON.stringify(S))}catch(e){}}
+function today(d){return(d||new Date()).toLocaleDateString('en-CA')}
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function rs(n){return'₹'+(Math.round(n*100)/100)}
+function cost(it,g){return it.u=='pc'?g*it.p:g/1000*it.p}
+function per(it){return it.u=='pc'?'piece':it.u}
+function un(it,g){if(it.u=='pc')return g+' pc';var l=it.u=='L';return g>=1000?(g/1000)+(l?' L':' kg'):g+(l?' ml':' g')}
+function nav(){document.getElementById('nav').innerHTML=TABS.map(function(t){return'<button class="'+(t[0]==tab?'on':'')+'" onclick="go(\''+t[0]+'\')"><span>'+t[1]+'</span>'+t[2].split(' · ')[0]+'</button>'}).join('')}
+function go(t){tab=t;render()}
+function spent(d){return S.buys.filter(function(b){return b.d==d}).reduce(function(a,b){return a+b.c},0)}
+function render(){nav();var T=TABS.filter(function(t){return t[0]==tab})[0];
+document.getElementById('ttl').textContent=T[1]+' '+T[2];
+var un_=(getU()[S.uid]||{}).n||'';document.getElementById('dt').innerHTML=new Date().toDateString()+' · 👤 '+esc(un_)+' <button class="lnk" onclick="logout()">Sign out</button>';
+var a=document.getElementById('app');
+if(tab=='buy')a.innerHTML=vBuy();else if(tab=='price')a.innerHTML=vPrice();else if(tab=='soda')a.innerHTML=vSoda();else if(tab=='today')a.innerHTML=vToday();else if(tab=='fin')a.innerHTML=vFin();else a.innerHTML=vCalc()}
+function vBuy(){var td=today(),L=S.buys.filter(function(b){return b.d==td});
+var h='<div class="secs">'+CATS.map(function(c){return'<button class="sec '+(c[0]==cat?'on':'')+'" onclick="cat=\''+c[0]+'\';render()"><span>'+c[1]+'</span>'+c[2]+'<br><small>'+c[3]+'</small></button>'}).join('')+'</div>';
+h+='<div class="grid">'+S.items.filter(function(i){return i.c==cat}).map(function(i){return'<button class="tile" onclick="openItem('+i.id+')"><span class="e">'+esc(i.e)+'</span><b>'+esc(i.n)+'</b><small>'+esc(i.t)+' · '+rs(i.p)+'/'+per(i)+'</small></button>'}).join('')+'</div>';
+h+='<div class="card"><b>Today bought · இன்று வாங்கியது</b>';
+if(!L.length)h+='<p style="color:var(--mut)">Nothing yet. Tap a picture above to add.</p>';
+h+=L.map(function(b){return'<div class="row"><span>'+esc(b.e)+' '+esc(b.n)+' <small>'+esc(b.q)+'</small></span><span><b>'+rs(b.c)+'</b> <button class="x" aria-label="Delete" onclick="delBuy('+b.id+')">✕</button></span></div>'}).join('');
+return h+'<div class="row"><b>Total</b><b class="big out" style="font-size:24px">'+rs(spent(td))+'</b></div></div>'}
+function openItem(id){sel=S.items.filter(function(i){return i.id==id})[0];gm=0;sheet()}
+function sheet(){var it=sel,pc=it.u=='pc',w=pc?[1,2,3,4,5,6,10]:[100,250,500,750,1000,1500,2000],c=cost(it,gm);
+document.getElementById('sh').innerHTML='<div class="row"><b style="font-size:22px">'+esc(it.e)+' '+esc(it.n)+' · '+esc(it.t)+'</b><button class="x" onclick="closeS()">✕</button></div><div class="row"><span>Price today · இன்றைய விலை<br><small>₹ per '+per(it)+'</small></span><span style="width:120px"><input type="number" inputmode="decimal" value="'+it.p+'" oninput="setPr(this.value)" aria-label="Price today"></span></div><div class="chips">'+w.map(function(x){return'<button class="chip '+(gm==x?'on':'')+'" onclick="setG('+x+')">'+un(it,x)+'</button>'}).join('')+'</div><input id="cg" type="number" inputmode="decimal" min="0" placeholder="Other '+(pc?'quantity':'amount in '+(it.u=='L'?'ml':'grams'))+'" oninput="setG(this.value,1)"><div class="tc" style="padding:12px"><div style="color:var(--mut)">'+un(it,gm||0)+'</div><div class="big">'+rs(c)+'</div></div><button class="btn" onclick="addBuy()">Add to today · சேர்</button>'
+document.getElementById('sheet').classList.add('show')}
+function setG(v,k){gm=Number(v)||0;if(k){var c=cost(sel,gm),el=document.querySelector('#sh .big');if(el)el.textContent=rs(c);document.querySelectorAll('#sh .chip').forEach(function(x){x.classList.remove('on')});return}sheet()}
+function closeS(){document.getElementById('sheet').classList.remove('show');render()}
+function setPr(v){sel.p=Number(v)||0;save();var el=document.querySelector('#sh .big');if(el)el.textContent=rs(cost(sel,gm))}
+function addBuy(){if(!gm)return;S.buys.push({id:Date.now(),d:today(),n:sel.n,e:sel.e,k:sel.c,q:un(sel,gm),c:Math.round(cost(sel,gm)*100)/100});save();closeS();render()}
+function delBuy(id){S.buys=S.buys.filter(function(b){return b.id!=id});save();render()}
+function vPrice(){var h='<p style="color:var(--mut)">Change prices every morning. Price is per kg, litre or piece.</p>';
+CATS.forEach(function(c){h+='<div class="hd">'+c[1]+' '+c[2]+' · '+c[3]+'</div><div class="card">'+S.items.filter(function(i){return i.c==c[0]}).map(function(i){return'<div class="row"><span style="font-size:32px">'+esc(i.e)+'</span><span style="flex:1"><b>'+esc(i.n)+'</b><br><small>'+esc(i.t)+' /'+per(i)+'</small></span><span style="width:110px"><input type="number" inputmode="decimal" value="'+i.p+'" onchange="setP('+i.id+',this.value)" aria-label="Price of '+esc(i.n)+'"></span></div>'}).join('')+'</div>'});
+h+='<div class="card"><b>Add new item · புதிய பொருள்</b><div style="display:grid;gap:8px;margin-top:8px"><input id="nn" placeholder="Name (e.g. Beetroot)"><input id="ne" placeholder="Emoji (e.g. 🥬)"><select id="nc">'+CATS.map(function(c){return'<option value="'+c[0]+'">'+c[1]+' '+c[2]+'</option>'}).join('')+'</select><select id="nu"><option value="kg">per kg</option><option value="L">per litre</option><option value="pc">per piece</option></select><input id="np" type="number" inputmode="decimal" placeholder="Price"><button class="btn" onclick="addItem()">Add item</button></div></div>';return h}
+function setP(id,v){S.items.forEach(function(i){if(i.id==id)i.p=Number(v)||0});save()}
+function addItem(){var n=document.getElementById('nn').value.trim();if(!n)return;S.items.push({id:Date.now(),n:n,t:'',e:document.getElementById('ne').value.trim()||'🛒',p:Number(document.getElementById('np').value)||0,c:document.getElementById('nc').value,u:document.getElementById('nu').value});cat=document.getElementById('nc').value;save();render()}
+function vSoda(){var td=today(),c=S.soda[td]||0;
+return'<div class="card tc"><div style="color:var(--mut)">Goli soda sold today · இன்று விற்றது</div><div class="big" style="font-size:64px">'+c+'</div><div style="display:flex;justify-content:center;gap:28px;margin:10px 0"><button class="sodabtn m" aria-label="Minus one" onclick="sd(-1)">−</button><button class="sodabtn" aria-label="Plus one" onclick="sd(1)">+</button></div><div style="color:var(--mut)">Income · வருமானம்</div><div class="big in">'+rs(c*S.sp)+'</div></div><div class="card"><b>Price of 1 soda</b><input type="number" inputmode="decimal" value="'+S.sp+'" onchange="S.sp=Number(this.value)||0;save();render()" style="margin-top:8px"></div><div class="card"><b>Add many at once</b><div class="chips">'+[5,10,20].map(function(n){return'<button class="chip" onclick="sd('+n+')">+'+n+'</button>'}).join('')+'</div></div>'}
+function sd(n){var td=today();S.soda[td]=Math.max(0,(S.soda[td]||0)+n);save();render()}
+function vToday(){var td=today(),c=S.soda[td]||0,inc=c*S.sp,sp=spent(td),b=inc-sp;
+var h='<div class="card tc"><div style="color:var(--mut)">Balance · மீதம்</div><div class="big '+(b>=0?'in':'out')+'">'+(b<0?'−':'')+rs(Math.abs(b))+'</div></div><div class="card"><div class="row"><span>🥤 Soda income ('+c+' sold)</span><b class="in">'+rs(inc)+'</b></div><div class="row"><span>🛒 Total spent</span><b class="out">'+rs(sp)+'</b></div>'+CATS.map(function(c){var t=S.buys.filter(function(b){return b.d==td&&(b.k||'v')==c[0]}).reduce(function(a,b){return a+b.c},0);return t?'<div class="row"><small>'+c[1]+' '+c[2]+'</small><small>'+rs(t)+'</small></div>':''}).join('')+'</div><div class="card tbl"><b>Last 7 days · கடந்த 7 நாள்</b>';
+for(var i=0;i<7;i++){var d=new Date();d.setDate(d.getDate()-i);var k=today(d),s=S.soda[k]||0,e=spent(k);h+='<div class="row"><span>'+k.slice(5)+'<br><small>'+s+' soda</small></span><span style="text-align:right"><span class="in">+'+rs(s*S.sp)+'</span><br><span class="out">−'+rs(e)+'</span></span></div>'}
+return h+'</div><button class="btn" onclick="savePdf(today())">📄 Save today bill (PDF)</button>'}
+var FC={in:[['Daily wages','💼'],['Other income','💰'],['Gift','🎁']],out:[['Rent','🏠'],['Electricity','💡'],['Transport','🚌'],['Mobile','📱'],['Medical','💊'],['Education','📚'],['Other','🧾']]},ft='out',fc='Rent';
+function finT(p,t){return S.fin.filter(function(x){return x.t==t&&x.d.indexOf(p)==0}).reduce(function(a,x){return a+x.a},0)}
+function sodaT(p){var a=0;for(var k in S.soda)if(k.indexOf(p)==0)a+=S.soda[k]*S.sp;return a}
+function grT(p){return S.buys.filter(function(b){return b.d.indexOf(p)==0}).reduce(function(a,b){return a+b.c},0)}
+function fblock(p,title){var si=sodaT(p),oi=finT(p,'in'),g=grT(p),oe=finT(p,'out'),b=si+oi-g-oe;
+function r(l,v,c){return'<div class="row"><span>'+l+'</span><b class="'+c+'">'+rs(v)+'</b></div>'}
+return'<div class="card"><b>'+title+'</b>'+r('🥤 Soda income',si,'in')+r('💼 Other income',oi,'in')+r('🛒 Groceries',g,'out')+r('💸 Other expenses',oe,'out')+'<div class="row"><b>Balance · மீதம்</b><b class="big '+(b>=0?'in':'out')+'" style="font-size:26px">'+(b<0?'−':'')+rs(Math.abs(b))+'</b></div></div>'}
+function vFin(){var td=today(),L=S.fin.filter(function(x){return x.d==td});
+var h=fblock(td,'Today · இன்று');
+h+='<div class="card"><b>Add entry · புதிய பதிவு</b><div class="chips"><button class="chip '+(ft=='in'?'on':'')+'" onclick="setFT(\'in\')">💰 Income</button><button class="chip '+(ft=='out'?'on':'')+'" onclick="setFT(\'out\')">💸 Expense</button></div><div class="chips">'+FC[ft].map(function(c){return'<button class="chip '+(fc==c[0]?'on':'')+'" onclick="fc=\''+c[0]+'\';render()">'+c[1]+' '+c[0]+'</button>'}).join('')+'</div><div style="display:grid;gap:8px"><input id="fa" type="number" inputmode="decimal" placeholder="Amount ₹"><input id="fn" placeholder="Note (optional)"><button class="btn" onclick="addFin()">Save '+(ft=='in'?'income':'expense')+'</button></div></div>';
+if(L.length)h+='<div class="card"><b>Today entries</b>'+L.map(function(x){return'<div class="row"><span>'+x.e+' '+esc(x.c)+(x.n?'<br><small>'+esc(x.n)+'</small>':'')+'</span><span><b class="'+(x.t=='in'?'in':'out')+'">'+(x.t=='in'?'+':'−')+rs(x.a)+'</b> <button class="x" aria-label="Delete" onclick="delFin('+x.id+')">✕</button></span></div>'}).join('')+'</div>';
+return h+fblock(td.slice(0,7),'This month · இந்த மாதம்')}
+function setFT(t){ft=t;fc=FC[t][0][0];render()}
+function addFin(){var a=Number(document.getElementById('fa').value);if(!(a>0))return;var e=FC[ft].filter(function(c){return c[0]==fc})[0][1];S.fin.push({id:Date.now(),d:today(),t:ft,c:fc,e:e,n:document.getElementById('fn').value.trim(),a:a});save();render()}
+function delFin(id){S.fin=S.fin.filter(function(x){return x.id!=id});save();render()}
+/*PDF*/
+function pd(s,n){s=String(s);while(s.length<n)s+=' ';return s.slice(0,n)}
+function pdf(lines){var per=46,pages=[],i;for(i=0;i<lines.length;i+=per)pages.push(lines.slice(i,i+per));if(!pages.length)pages=[[]];
+var o=[],n=pages.length,kids=pages.map(function(_,i){return(4+2*i)+' 0 R'}).join(' ');
+o[1]='<</Type/Catalog/Pages 2 0 R>>';o[2]='<</Type/Pages/Kids['+kids+']/Count '+n+'>>';o[3]='<</Type/Font/Subtype/Type1/BaseFont/Courier>>';
+pages.forEach(function(p,i){var t='BT /F1 11 Tf 40 800 Td 15 TL\n'+p.map(function(l){return'('+l.replace(/[^\x20-\x7E]/g,'').replace(/([()\\])/g,'\\$1')+') Tj T*'}).join('\n')+'\nET';
+o[4+2*i]='<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Resources<</Font<</F1 3 0 R>>>>/Contents '+(5+2*i)+' 0 R>>';
+o[5+2*i]='<</Length '+t.length+'>>\nstream\n'+t+'\nendstream'});
+var out='%PDF-1.4\n',off=[],k;for(k=1;k<o.length;k++){off[k]=out.length;out+=k+' 0 obj\n'+o[k]+'\nendobj\n'}
+var x=out.length;out+='xref\n0 '+o.length+'\n0000000000 65535 f \n';for(k=1;k<o.length;k++)out+=('0000000000'+off[k]).slice(-10)+' 00000 n \n';
+out+='trailer\n<</Size '+o.length+'/Root 1 0 R>>\nstartxref\n'+x+'\n%%EOF';return new Blob([out],{type:'application/pdf'})}
+/*ENDPDF*/
+function R(n){return'Rs.'+(Math.round(n*100)/100)}
+function billLines(d){var u=getU()[S.uid]||{},sc=S.soda[d]||0,B=S.buys.filter(function(b){return b.d==d}),F=S.fin.filter(function(x){return x.d==d}),g=grT(d),fi=finT(d,'in'),fo=finT(d,'out'),si=sc*S.sp,ln=['DAILY BILL  '+d,'Name: '+(u.n||''),'','GOLI SODA',pd('  Sold',22)+sc+' x '+R(S.sp)+' = '+R(si),'','PURCHASES'];
+B.forEach(function(b){ln.push(pd('  '+b.n,22)+pd(b.q,12)+R(b.c))});if(!B.length)ln.push('  none');ln.push(pd('  Total',34)+R(g),'','OTHER INCOME / EXPENSE');
+F.forEach(function(x){ln.push(pd('  '+x.c+(x.n?' ('+x.n+')':''),34)+(x.t=='in'?'+':'-')+R(x.a))});if(!F.length)ln.push('  none');
+var ti=si+fi,te=g+fo;ln.push('','TOTAL INCOME   '+R(ti),'TOTAL EXPENSE  '+R(te),'BALANCE        '+R(ti-te));return ln}
+function yest(){var d=new Date();d.setDate(d.getDate()-1);return today(d)}
+function dayHas(d){return(S.soda[d]||0)>0||S.buys.some(function(b){return b.d==d})||S.fin.some(function(x){return x.d==d})}
+function checkBill(){if(!S)return;var y=yest(),b=document.getElementById('bn');b.innerHTML=(S.billed!=y&&dayHas(y))?'<div class="bn"><span>📄 Bill for '+y+' is ready</span><button onclick="savePdf(\''+y+'\')">Save PDF</button></div>':''}
+function toast(m){document.getElementById('bn').innerHTML='<div class="bn"><span>'+m+'</span></div>';setTimeout(checkBill,3500)}
+async function savePdf(d){var dl=null;try{dl=window.claude&&await window.claude.use('downloads')}catch(e){}
+if(!dl){try{var bl=pdf(billLines(d)),an=document.createElement('a');an.href=URL.createObjectURL(bl);an.download='Bill-'+d+'.pdf';document.body.appendChild(an);an.click();an.remove();if(d==yest())S.billed=d;save();toast('PDF saved ✔')}catch(e){toast('Could not save the PDF.')}return}
+try{await dl.save({filename:'Bill-'+d+'.pdf',data:pdf(billLines(d))});if(d==yest())S.billed=d;save();toast('PDF saved ✔')}catch(e){toast(e&&e.code=='declined'?'Not saved.':'Could not save the PDF.')}}
+function sched(){clearTimeout(MT);var n=new Date(),m=new Date(n);m.setHours(24,0,5,0);MT=setTimeout(function(){render();checkBill();sched()},m-n)}
+function getU(){try{return JSON.parse(localStorage.getItem('kk_users'))||{}}catch(e){return{}}}
+function nid(v){v=v.trim();if(v.indexOf('@')>-1)return/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)?v.toLowerCase():'';var d=v.replace(/\D/g,'').slice(-10);return d.length==10?d:''}
+async function hs(salt,pw){var b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+pw));return Array.from(new Uint8Array(b)).map(function(x){return('0'+x.toString(16)).slice(-2)}).join('')}
+function showAuth(){var up=AM=='up';document.getElementById('auth').innerHTML='<div class="wrap" style="padding-top:36px"><div class="tc" style="font-size:60px">🧅🥤</div><h1 class="tc">Daily Kanakku · கணக்கு</h1><div class="card"><b>'+(up?'Create account · புதிய கணக்கு':'Sign in · உள்நுழை')+'</b><div style="display:grid;gap:8px;margin-top:10px">'+(up?'<input id="an" placeholder="Your name">':'')+'<input id="ai" inputmode="email" autocomplete="username" placeholder="Phone number or Google email"><input id="ap" type="password" autocomplete="'+(up?'new-password':'current-password')+'" placeholder="Password (min 6)"><div id="ae" class="out" role="alert"></div><button class="btn" onclick="doAuth()">'+(up?'Create account':'Sign in')+'</button><button class="btn o" onclick="AM=\''+(up?'in':'up')+'\';showAuth()">'+(up?'I already have an account':'New user? Create account')+'</button></div></div><p style="color:var(--mut);font-size:13px">Accounts and data stay on this phone only.</p></div>';document.getElementById('auth').style.display='block'}
+async function doAuth(){var e=document.getElementById('ae'),id=nid(document.getElementById('ai').value),pw=document.getElementById('ap').value,U=getU();
+if(!id){e.textContent='Enter a 10-digit phone number or a valid email.';return}
+if(pw.length<6){e.textContent='Password must be at least 6 characters.';return}
+try{if(AM=='up'){if(U[id]){e.textContent='This ID already has an account. Please sign in.';return}
+var first=!Object.keys(U).length,a=new Uint8Array(8);crypto.getRandomValues(a);var salt=Array.from(a).join('-');
+U[id]={n:(document.getElementById('an').value.trim()||id),s:salt,h:await hs(salt,pw)};
+if(first){try{var old=localStorage.getItem(K);if(old)localStorage.setItem(K+'_'+id,old)}catch(x){}}
+localStorage.setItem('kk_users',JSON.stringify(U))}
+else if(!U[id]||(await hs(U[id].s,pw))!=U[id].h){e.textContent='Wrong ID or password.';return}
+localStorage.setItem('kk_session',id);start(id)}catch(x){e.textContent='Could not sign in on this device.'}}
+function start(id){UK=K+'_'+id;S=load();if(!S.fin)S.fin=[];S.uid=id;tab='buy';document.getElementById('auth').style.display='none';render();checkBill();sched()}
+function logout(){try{localStorage.removeItem('kk_session')}catch(e){}S=null;AM='in';document.getElementById('bn').innerHTML='';showAuth()}
+function boot(){var id=null;try{id=localStorage.getItem('kk_session')}catch(e){}
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&S){checkBill();render()}});
+if(id&&getU()[id])start(id);else{AM=Object.keys(getU()).length?'in':'up';showAuth()}}
+var ex='';
+function vCalc(){var k=['7','8','9','÷','4','5','6','×','1','2','3','−','0','.','C','+'];
+return'<div class="card tc"><div style="min-height:28px;color:var(--mut)" id="cx">'+esc(ex)+'</div><div class="big" id="cr">'+esc(ev(ex))+'</div></div><div class="keys">'+k.map(function(x){return'<button onclick="key(\''+x+'\')">'+x+'</button>'}).join('')+'<button onclick="key(\'⌫\')">⌫</button><button style="grid-column:span 3;background:var(--g);color:#fff" onclick="key(\'=\')">=</button></div>'}
+function ev(s){var t=s.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-');if(!t||!/^[0-9+\-*/.]+$/.test(t)||/[+\-*/.]$/.test(t))return'';try{var r=Function('return '+t)();return isFinite(r)?String(Math.round(r*100)/100):''}catch(e){return''}}
+function key(x){if(x=='C')ex='';else if(x=='⌫')ex=ex.slice(0,-1);else if(x=='=')ex=ev(ex)||ex;else ex+=x;document.getElementById('cx').textContent=ex;document.getElementById('cr').textContent=ev(ex)}
+if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js')}catch(e){}}
+boot();
+</script>
+</body>
+</html>
