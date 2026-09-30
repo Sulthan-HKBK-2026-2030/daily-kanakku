@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Noto+Sans+Tamil:wght@400;700&display=swap" rel="stylesheet"><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#1f7a3d"><link rel="icon" href="icon-192.png"><title>Daily Kanakku – கணக்கு</title>
+<style>
+:root{--bg:#fbf6ea;--card:#fff;--ink:#22301f;--mut:#6b7566;--g:#177a3c;--gl:#e3f3e6;--y:#f5b301;--yl:#fff2c4;--r:#d1391f;--line:#eadfc6;--h1:#0b4f2a;--h2:#1a9150;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a12;--card:#18261c;--ink:#eef3ee;--mut:#9fb0a2;--g:#4cc26f;--gl:#1f3a27;--yl:#3a3210;--line:#2a3b2e;--h1:#0a3a1f;--h2:#146b39}}
+:root[data-theme="dark"]{--bg:#0f1a12;--card:#18261c;--ink:#eef3ee;--mut:#9fb0a2;--g:#4cc26f;--gl:#1f3a27;--yl:#3a3210;--line:#2a3b2e;--h1:#0a3a1f;--h2:#146b39}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.35 "Noto Sans Tamil","Segoe UI",system-ui,sans-serif;padding-bottom:150px}
+#hd{background:linear-gradient(135deg,var(--h1),var(--h2));color:#fff;padding:16px 16px 20px;border-radius:0 0 26px 26px}
+#hd h1{margin:0;font-size:22px;display:flex;align-items:center;gap:8px}#hd .sub{opacity:.85;font-size:13px;margin-top:2px}
+.back{border:0;background:#ffffff33;color:#fff;border-radius:50%;width:36px;height:36px;font-size:20px;cursor:pointer}
+h1.tc{font-size:24px;margin:8px 0 16px}
+.wrap{padding:12px 14px;max-width:560px;margin:auto}.mut{color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile{position:relative;background:var(--card);border-radius:20px;box-shadow:0 2px 8px #0000000f;border:1px solid var(--line);overflow:hidden}
+.tb{display:block;width:100%;border:0;background:none;color:var(--ink);font:inherit;padding:12px 4px 10px;text-align:center;cursor:pointer}.tb:active{background:var(--gl)}
+.tb .e{display:grid;place-items:center;width:56px;height:56px;margin:0 auto 4px;border-radius:50%;background:var(--gl);font-size:32px}
+.tb b{display:block;font-size:14px}.tb small{display:block;color:var(--mut);font-size:11px}
+.tb .pr{display:inline-block;margin-top:4px;background:var(--yl);color:var(--ink);border-radius:999px;padding:1px 8px;font-weight:700}
+.star{position:absolute;top:2px;right:4px;border:0;background:none;font-size:20px;color:var(--y);cursor:pointer;padding:4px;z-index:1}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;margin:12px 0;box-shadow:0 2px 8px #0000000a}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}.row:last-child{border:0}
+input,select{font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:11px;width:100%}
+input:focus,select:focus,button:focus-visible{outline:3px solid var(--y)}
+input[type=checkbox]{width:24px;height:24px;accent-color:var(--g)}
+.btn{font:inherit;font-weight:800;border:0;border-radius:16px;padding:14px 16px;background:var(--g);color:#fff;cursor:pointer;width:100%;margin-top:8px}.btn.o{background:var(--gl);color:var(--g)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.chips.sc{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}
+.chip{font:inherit;font-size:15px;border:2px solid var(--g);background:var(--card);color:var(--g);border-radius:999px;padding:8px 14px;font-weight:700;cursor:pointer;white-space:nowrap}.chip.on{background:var(--g);color:#fff}
+.big{font-size:34px;font-weight:800}.in{color:var(--g)}.out{color:var(--r)}
+.hero{background:linear-gradient(135deg,var(--h1),var(--h2));color:#fff;border-radius:24px;padding:18px;margin:4px 0 12px;box-shadow:0 6px 16px #0b4f2a40}.hero small{opacity:.85}.hb{font-size:44px;font-weight:800;margin:2px 0}
+.hs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.hs div{background:#ffffff26;border-radius:14px;padding:8px}.hs b{display:block;font-size:18px}
+.qa{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.qa button{font:inherit;font-size:12px;font-weight:700;border:0;background:var(--card);color:var(--ink);border-radius:16px;padding:10px 2px;box-shadow:0 2px 8px #0000000f;cursor:pointer}.qa span{display:block;font-size:26px}
+.ch{display:flex;gap:6px;height:120px;margin-top:10px}.cc{flex:1;text-align:center}.bars{height:96px;display:flex;gap:2px;align-items:flex-end;justify-content:center}.bars i{width:9px;border-radius:5px 5px 0 0;min-height:2px}.bi{background:var(--g)}.be{background:var(--r)}.cc small{color:var(--mut);font-size:11px}.lg{font-size:13px;margin-top:6px}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:10px}.menu button{font:inherit;text-align:left;border:0;border-radius:18px;background:var(--card);color:var(--ink);padding:14px;box-shadow:0 2px 8px #0000000f;cursor:pointer}.menu span{font-size:28px;display:block}.menu small{color:var(--mut)}
+.secs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.sec{font:inherit;font-size:12px;font-weight:700;border:2px solid transparent;background:var(--card);color:var(--ink);border-radius:16px;padding:8px 2px;cursor:pointer;box-shadow:0 2px 8px #0000000a}.sec span{display:block;font-size:26px}.sec small{font-weight:400;color:var(--mut)}.sec.on{border-color:var(--c);background:var(--gl)}
+.sec[data-c=v]{--c:#2e9e4f}.sec[data-c=f]{--c:#f08a24}.sec[data-c=g]{--c:#d6a100}.sec[data-c=o]{--c:#2b8ad6}
+.hd{font-weight:800;margin:16px 2px 0;font-size:18px}
+.irow{padding:10px 0;border-bottom:1px solid var(--line)}.irow:last-child{border:0}.g3{display:grid;grid-template-columns:1fr 1.2fr 1.5fr;gap:6px;margin-top:6px}label small{color:var(--mut);display:block}
+.x{background:none;border:0;color:var(--r);font-size:22px;cursor:pointer}
+.sodabtn{width:88px;height:88px;border-radius:50%;border:0;font-size:44px;font-weight:800;color:#fff;background:var(--g);cursor:pointer;box-shadow:0 6px 14px #0003}.sodabtn.m{background:var(--r)}
+.tc{text-align:center}.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.keys button{font:inherit;font-size:22px;padding:14px 0;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.tbl{overflow-x:auto}
+.sheet{position:fixed;inset:0;background:#0007;display:none;align-items:flex-end;z-index:8}.sheet.show{display:flex}.sheet>div{background:var(--card);width:100%;max-width:560px;margin:auto;border-radius:24px 24px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+nav{position:fixed;left:10px;right:10px;bottom:calc(8px + env(safe-area-inset-bottom,0px));display:flex;background:var(--card);border-radius:26px;box-shadow:0 6px 20px #00000029;padding:6px;max-width:540px;margin:auto;z-index:6}
+nav button{flex:1;border:0;background:none;font:inherit;font-size:11px;color:var(--mut);padding:6px 0;border-radius:20px;cursor:pointer}nav button span{display:block;font-size:22px}nav button.on{background:var(--gl);color:var(--g);font-weight:800}
+#cb{position:fixed;left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom,0px));display:none;justify-content:space-between;align-items:center;background:var(--g);color:#fff;border-radius:16px;padding:12px 16px;font-weight:800;z-index:5;max-width:536px;margin:auto;cursor:pointer;box-shadow:0 6px 16px #0003}
+.auth{position:fixed;inset:0;background:var(--bg);z-index:20;overflow:auto;display:none}.lnk{font:inherit;font-size:13px;border:0;background:none;color:var(--g);text-decoration:underline;cursor:pointer}
+.bn{margin:10px 14px 0;padding:10px 12px;border-radius:14px;background:var(--y);color:#1d2b1f;display:flex;gap:8px;align-items:center;justify-content:space-between;font-weight:700}.bn button{font:inherit;font-weight:800;border:0;border-radius:10px;padding:8px 12px;background:#1d2b1f;color:#fff;cursor:pointer}
+</style>
+</head>
+<body>
+<header id="hd"><h1 id="ttl"></h1><div class="sub" id="dt"></div></header><div id="st"></div><div id="bn"></div>
+<div class="wrap" id="app"></div>
+<div class="sheet" id="sheet"><div id="sh"></div></div>
+<div class="auth" id="auth"></div>
+<div id="cb"></div>
+<nav id="nav"></nav>
+<script>
+var K='dailyKanakku2',TABS=[['home','🏠','Home · முகப்பு'],['buy','🛒','Buy · வாங்க'],['soda','🥤','Soda · சோடா'],['fin','💰','Finance · நிதி'],['more','☰','More · மேலும்']],TT={price:'🏷️ Prices & Items · விலை',list:'📝 Shopping List · பட்டியல்',calc:'🧮 Calculator · கணக்கு'};
+var CATS=[['v','🥬','Vegetables','காய்கறி'],['f','🍎','Fruits','பழங்கள்'],['g','🌾','Groceries','மளிகை'],['o','🧼','Others','மற்றவை']],cat='v';
+var SUBS=[['all','All'],['sp','🌶️ Spices'],['ws','⭐ Whole spices'],['dl','🟡 Pulses'],['fl','🌾 Grains'],['oi','🛢️ Oils'],['su','🍯 Sugar'],['cd','🧂 Condiments'],['bv','🥤 Drinks'],['bf','🥣 Breakfast'],['sn','🍪 Snacks'],['dn','🌰 Dry fruits'],['bk','🧁 Baking'],['ms','📦 Misc']],SM2={'Cardamom':'ws','Cloves':'ws','Bay Leaves':'ws','Fennel':'ws','Fenugreek Seeds':'ws','Coriander Seeds':'ws','Pepper':'sp','Sugar':'su','Jaggery':'su','Salt':'cd','Crystal Salt':'cd','Tamarind':'cd','Peanut':'dn'},SM={'Ponni Rice':'fl','Basmati Rice':'fl','Idli Rice':'fl','Atta':'fl','Toor Dal':'dl','Urad Dal':'dl','Moong Dal':'dl','Chana Dal':'dl','Sunflower Oil':'oi','Goldwinner Oil':'oi','Coconut Oil':'oi','Ghee':'oi','Salt':'ms','Crystal Salt':'ms','Sugar':'ms','Jaggery':'sn','Tamarind':'ms','Turmeric Powder':'sp','Chilli Powder':'sp','Mustard Seeds':'sp','Cumin Seeds':'sp','Hing':'sp','Garam Masala':'sp','Semiya':'ms','Rava':'fl','Noodles':'sn','Tea Dust':'bv','Coffee Powder':'bv','Cloth Soap':'ms','Shampoo Sachet':'ms','Biscuit':'sn','Matchbox':'ms','Candle':'ms','Agarbatti':'ms','Coconut':'ms','Egg':'ms','Pepper':'sp','Cardamom':'sp','Cloves':'sp','Dry Chilli':'sp','Coriander Seeds':'sp','Fennel':'sp','Poha':'fl','Sago':'ms','Peanut':'ms'};
+var RAW=['Onion|வெங்காயம்|🧅|40|v',
+'Potato|உருளைக்கிழங்கு|🥔|40|v',
+'Garlic|பூண்டு|🧄|200|v',
+'Tomato|தக்காளி|🍅|30|v',
+'Ginger|இஞ்சி|🌱|120|v',
+'Green Chilli|பச்சை மிளகாய்|🌶️|80|v',
+'Carrot|கேரட்|🥕|60|v',
+'Beans|பீன்ஸ்|🟢|70|v',
+'Brinjal|கத்தரிக்காய்|🍆|50|v',
+'Curry Leaves|கறிவேப்பிலை|🌿|100|v',
+'Coriander|கொத்தமல்லி|🌿|80|v',
+'Mint|புதினா|🍃|80|v',
+'Bottle Gourd|சுரைக்காய்|🥒|40|v',
+'Zucchini|சுகினி|🥒|80|v',
+'Apple|ஆப்பிள்|🍎|180|f',
+'Banana|வாழைப்பழம்|🍌|60|f',
+'Grapes|திராட்சை|🍇|100|f',
+'Orange|ஆரஞ்சு|🍊|80|f',
+'Lemon|எலுமிச்சை|🍋|100|f',
+'Kiwi|கிவி|🥝|300|f',
+'Papaya|பப்பாளி|🍈|50|f',
+'Ponni Rice|பொன்னி அரிசி|🍚|60|g',
+'Basmati Rice|பாஸ்மதி அரிசி|🍚|120|g',
+'Idli Rice|இட்லி அரிசி|🍚|50|g',
+'Atta|கோதுமை மாவு|🌾|45|g',
+'Toor Dal|துவரம் பருப்பு|🟡|150|g',
+'Urad Dal|உளுத்தம் பருப்பு|⚪|130|g',
+'Moong Dal|பாசிப்பருப்பு|🟢|120|g',
+'Chana Dal|கடலைப் பருப்பு|🟠|90|g',
+'Sunflower Oil|சூரியகாந்தி எண்ணெய்|🌻|140|g|L',
+'Goldwinner Oil|கோல்டு வின்னர் எண்ணெய்|🛢️|150|g|L',
+'Coconut Oil|தேங்காய் எண்ணெய்|🥥|220|g|L',
+'Ghee|நெய்|🧈|600|g',
+'Salt|உப்பு|🧂|20|g',
+'Crystal Salt|கல் உப்பு|🧂|25|g',
+'Sugar|சர்க்கரை|🍬|45|g',
+'Jaggery|வெல்லம்|🟤|80|g',
+'Tamarind|புளி|🟫|200|g',
+'Turmeric Powder|மஞ்சள் தூள்|🟡|200|g',
+'Chilli Powder|மிளகாய் தூள்|🌶️|250|g',
+'Mustard Seeds|கடுகு|⚫|120|g',
+'Cumin Seeds|சீரகம்|🌰|400|g',
+'Hing|பெருங்காயம்|🥄|1500|g',
+'Garam Masala|கரம் மசாலா|🍲|500|g',
+'Semiya|சேமியா|🍜|80|g',
+'Rava|ரவை|🥣|55|g',
+'Noodles|நூடுல்ஸ்|🍜|15|g|pc',
+'Tea Dust|தேயிலை தூள்|🍵|400|g',
+'Coffee Powder|காபி தூள்|☕|600|g',
+'Milk|பால்|🥛|56|o|L',
+'Curd|தயிர்|🥣|70|o',
+'Butter|வெண்ணெய்|🧈|500|o',
+'Paneer|பனீர்|🧀|350|o',
+'Dishwash|பாத்திரம் கழுவும் திரவம்|🧴|99|o|pc',
+'Detergent|சலவை தூள்|🧺|120|o|pc',
+'Floor Cleaner|தரை சுத்தம்|🧹|110|o|pc',
+'Toilet Cleaner|கழிப்பறை சுத்தம்|🚽|90|o|pc',
+'Handwash|கை கழுவும் திரவம்|🧼|60|o|pc',
+'Bath Soap|குளியல் சோப்பு|🧼|40|o|pc',
+'Toothpaste|பற்பசை|🪥|80|o|pc',
+'Shampoo|ஷாம்பு|🧴|150|o|pc',
+'Cloth Soap|துணி சோப்பு|🧼|10|g|pc',
+'Shampoo Sachet|ஷாம்பு பாக்கெட்|🧴|1|g|pc',
+'Biscuit|பிஸ்கட்|🍪|10|g|pc',
+'Matchbox|தீப்பெட்டி|🔥|2|g|pc',
+'Candle|மெழுகுவர்த்தி|🕯️|5|g|pc',
+'Agarbatti|ஊதுபத்தி|🪔|20|g|pc',
+'Coconut|தேங்காய்|🥥|30|g|pc',
+'Egg|முட்டை|🥚|7|g|pc',
+'Pepper|மிளகு|⚫|800|g',
+'Cardamom|ஏலக்காய்|🌿|2500|g',
+'Cloves|கிராம்பு|🟤|1200|g',
+'Dry Chilli|வத்தல்|🌶️|300|g',
+'Coriander Seeds|தனியா|🌿|150|g',
+'Fennel|சோம்பு|🌿|300|g',
+'Poha|அவல்|🍚|70|g',
+'Sago|ஜவ்வரிசி|⚪|90|g',
+'Peanut|வேர்க்கடலை|🥜|120|g',
+'Coriander Powder|மல்லித் தூள்|🌿|250|g||sp',
+'Fenugreek Seeds|வெந்தயம்|🟡|150|g||sp',
+'Red Lentils|மசூர் பருப்பு|🟠|110|g||dl',
+'Kidney Beans|ராஜ்மா|🔴|160|g||dl',
+'Chickpeas|கொண்டைக்கடலை|🟤|130|g||dl',
+'Rice Flour|அரிசி மாவு|⚪|60|g||fl',
+'Besan|கடலை மாவு|🟡|110|g||fl',
+'Sona Masoori Rice|சோனா மசூரி அரிசி|🍚|65|g||fl',
+'Mustard Oil|கடுகு எண்ணெய்|🛢️|180|g|L|oi',
+'Groundnut Oil|கடலை எண்ணெய்|🥜|190|g|L|oi',
+'Okra|வெண்டைக்காய்|🟢|50|v',
+'Spinach|கீரை|🥬|30|v',
+'Bitter Gourd|பாகற்காய்|🥒|50|v',
+'Mango|மாம்பழம்|🥭|100|f',
+'Pomegranate|மாதுளை|🔴|150|f',
+'Namkeen|நம்கீன்|🥨|200|g||sn',
+'Papad|அப்பளம்|⚪|200|g||sn',
+'Ladoo|லட்டு|🟠|400|g||sn',
+'Gulab Jamun|குலாப் ஜாமூன்|🟤|300|g||sn',
+'Buttermilk|மோர்|🥛|20|g|L|bv',
+'Bay Leaves|பிரியாணி இலை|🍃|400|g||ms',
+'Maida|மைதா|🌾|45|g||fl',
+'Lobia|காராமணி|🟤|120|g||dl',
+'Cinnamon|பட்டை|🟤|600|g||ws',
+'Black Cardamom|கருப்பு ஏலக்காய்|⚫|2000|g||ws',
+'Honey|தேன்|🍯|400|g||su',
+'Brown Sugar|நாட்டு சர்க்கரை|🟤|70|g||su',
+'Pickles|ஊறுகாய்|🥒|200|g||cd',
+'Vinegar|வினிகர்|🧴|60|g|L|cd',
+'Soy Sauce|சோயா சாஸ்|🧴|120|g|L|cd',
+'Tomato Ketchup|தக்காளி சாஸ்|🍅|120|g||cd',
+'Mayonnaise|மயோனைஸ்|🥚|180|g||cd',
+'Milk Powder|பால் பவுடர்|🥛|450|g||bv',
+'Green Tea|கிரீன் டீ|🍵|800|g||bv',
+'Horlicks|ஹார்லிக்ஸ்|🥤|280|g|pc|bv',
+'Oats|ஓட்ஸ்|🥣|150|g||bf',
+'Cornflakes|கார்ன்ஃப்ளேக்ஸ்|🥣|250|g||bf',
+'Muesli|மியூஸ்லி|🥣|350|g||bf',
+'Bread|பிரட்|🍞|40|g|pc|bf',
+'Peanut Butter|வேர்க்கடலை வெண்ணெய்|🥜|200|g|pc|bf',
+'Jam|ஜாம்|🍓|150|g|pc|bf',
+'Roasted Chana|வறுத்த கடலை|🟤|120|g||sn',
+'Popcorn|பாப்கார்ன்|🍿|150|g||sn',
+'Chips|சிப்ஸ்|🥔|10|g|pc|sn',
+'Makhana|தாமரை விதை|⚪|900|g||sn',
+'Almonds|பாதாம்|🌰|900|g||dn',
+'Cashews|முந்திரி|🥜|800|g||dn',
+'Raisins|உலர் திராட்சை|🍇|300|g||dn',
+'Walnuts|அக்ரூட்|🌰|1000|g||dn',
+'Pistachios|பிஸ்தா|🟢|1200|g||dn',
+'Dates|பேரீச்சம்பழம்|🟤|300|g||dn',
+'Cocoa Powder|கோகோ பவுடர்|🍫|500|g||bk',
+'Baking Powder|பேக்கிங் பவுடர்|🧁|200|g|pc|bk',
+'Baking Soda|சமையல் சோடா|🧂|30|g|pc|bk',
+'Vanilla Essence|வெனிலா எசன்ஸ்|🧴|40|g|pc|bk',
+'Yeast|ஈஸ்ட்|🍞|20|g|pc|bk',
+'Scrub Pad|பாத்திரம் தேய்க்கும் ஸ்கிரப்|🧽|20|o|pc',
+'Garbage Bags|குப்பை பைகள்|🗑️|80|o|pc',
+'Broom|துடைப்பம்|🧹|80|o|pc',
+'Phenyl|பினாயில்|🧴|60|o|pc',
+'Mosquito Coil|கொசு விரட்டி|🌀|40|o|pc',
+'Tissue Paper|டிஷ்யூ|🧻|50|o|pc',
+'Capsicum|குடைமிளகாய்|🟢|60|v',
+'Cucumber|வெள்ளரிக்காய்|🥒|40|v',
+'Beetroot|பீட்ரூட்|🟣|50|v',
+'Cabbage|முட்டைகோஸ்|🥬|30|v',
+'Cauliflower|காலிஃபிளவர்|⚪|40|v',
+'Drumstick|முருங்கைக்காய்|🥢|80|v',
+'Pumpkin|பூசணிக்காய்|🎃|30|v',
+'Radish|முள்ளங்கி|⚪|40|v',
+'Sweet Potato|சர்க்கரைவள்ளிக் கிழங்கு|🍠|60|v',
+'Raw Banana|வாழைக்காய்|🍌|40|v',
+'Seasonal Vegetables|பருவகால காய்கறிகள்|🥗|50|v',
+'Watermelon|தர்பூசணி|🍉|30|f',
+'Pineapple|அன்னாசி|🍍|60|f',
+'Guava|கொய்யா|🍈|60|f',
+'Sapota|சப்போட்டா|🟤|80|f',
+'Seasonal Fruits|பருவகால பழங்கள்|🍓|100|f',
+'Lobia (Matki)|காராமணி|🟤|110|g||dl',
+'Pickle|ஊறுகாய்|🥒|80|g|pc|cd'];
+var S,tab='buy',sel=null,gm=0,UK=K,AM='in',MT,pd=null,sub='all';
+function load(){try{var s=JSON.parse(localStorage.getItem(UK));if(s&&s.items)return s}catch(e){}
+var o={};try{o=JSON.parse(localStorage.getItem('dailyKanakku1'))||{}}catch(e){}
+var op={};(o.items||[]).forEach(function(i){op[i.n]=i.p});
+return{items:RAW.map(function(r,i){var a=r.split('|');return{id:i,n:a[0],t:a[1],e:a[2],p:op[a[0]]!=null?op[a[0]]:Number(a[3]),c:a[4],u:a[5]||'kg',s:a[6]||''}}),buys:o.buys||[],soda:o.soda||{},sp:o.sp||7}}
+function migrate(){if(S.v>=4)return;var have={},from=S.v>=3?99:(S.v>=2?78:0);S.items.forEach(function(i){have[i.n]=1;if(i.c=='g'&&!i.s)i.s=SM[i.n]||'ms';if(SM2[i.n])i.s=SM2[i.n]});RAW.forEach(function(r,i){var a=r.split('|');if(i>=from&&!have[a[0]])S.items.push({id:i,n:a[0],t:a[1],e:a[2],p:Number(a[3]),c:a[4],u:a[5]||'kg',s:a[6]||''})});S.v=4;save()}
+function qf(v){v=v.toLowerCase();document.querySelectorAll('.tile').forEach(function(t){t.style.display=t.dataset.n.indexOf(v)>-1?'':'none'})}
+function save(){try{localStorage.setItem(UK,JSON.stringify(S))}catch(e){}}
+function today(d){return(d||new Date()).toLocaleDateString('en-CA')}
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function rs(n){return'₹'+(Math.round(n*100)/100)}
+function cost(it,g){return it.u=='pc'?g*it.p:g/1000*it.p}
+function per(it){return it.u=='pc'?'piece':it.u}
+function un(it,g){if(it.u=='pc')return g+' pc';var l=it.u=='L';return g>=1000?(g/1000)+(l?' L':' kg'):g+(l?' ml':' g')}
+function nav(){var cur=(tab=='price'||tab=='list'||tab=='calc')?'more':tab;document.getElementById('nav').innerHTML=TABS.map(function(t){return'<button class="'+(t[0]==cur?'on':'')+'" onclick="go(\''+t[0]+'\')"><span>'+t[1]+'</span>'+t[2].split(' · ')[0]+'</button>'}).join('')}
+function go(t){tab=t;window.scrollTo(0,0);render()}
+function spent(d){return S.buys.filter(function(b){return b.d==d}).reduce(function(a,b){return a+b.c},0)}
+function stats(){var td=today(),i=sodaT(td)+finT(td,'in'),e=grT(td)+finT(td,'out'),b=i-e;document.getElementById('st').innerHTML='<div><small>Income · வரவு</small><b class="in">'+rs(i)+'</b></div><div><small>Spent · செலவு</small><b class="out">'+rs(e)+'</b></div><div><small>Balance · மீதம்</small><b class="'+(b>=0?'in':'out')+'">'+(b<0?'−':'')+rs(Math.abs(b))+'</b></div>'}
+function tg(){var r=document.documentElement,a=r.getAttribute('data-theme'),d=a=='dark'||(!a&&matchMedia('(prefers-color-scheme:dark)').matches);r.setAttribute('data-theme',d?'light':'dark');try{localStorage.setItem('kk_theme',d?'light':'dark')}catch(e){}}
+function cartBar(){var cb=document.getElementById('cb'),L=S?S.buys.filter(function(b){return b.d==today()}):[];if(tab=='buy'&&L.length){cb.style.display='flex';cb.innerHTML='<span>🛒 '+L.length+' items · கூடை</span><b>'+rs(spent(today()))+'</b>';cb.onclick=function(){document.getElementById('cart').scrollIntoView({behavior:'smooth'})}}else cb.style.display='none'}
+function render(){nav();cartBar();var T=TABS.filter(function(t){return t[0]==tab})[0];
+document.getElementById('ttl').innerHTML=(T?'':'<button class="back" onclick="go(\'more\')" aria-label="Back">←</button>')+esc(T?T[1]+' '+T[2]:TT[tab]);
+document.getElementById('dt').textContent=new Date().toDateString()+' · 👤 '+((getU()[S.uid]||{}).n||'');
+var V={home:vHome,buy:vBuy,soda:vSoda,fin:vFin,more:vMore,price:vPrice,list:vList,calc:vCalc};document.getElementById('app').innerHTML=V[tab]()}
+function vBuy(){var td=today(),L=S.buys.filter(function(b){return b.d==td});
+var h='<div class="secs">'+CATS.map(function(c){return'<button class="sec '+(c[0]==cat?'on':'')+'" data-c="'+c[0]+'" onclick="cat=\''+c[0]+'\';render()"><span>'+c[1]+'</span>'+c[2]+'<br><small>'+c[3]+'</small></button>'}).join('')+'</div>';
+h+=(cat=='g'?'<div class="chips sc">'+SUBS.map(function(x){return'<button class="chip '+(x[0]==sub?'on':'')+'" onclick="sub=\''+x[0]+'\';render()">'+x[1]+'</button>'}).join('')+'</div>':'')+'<input placeholder="🔍 Search item · தேடு" oninput="qf(this.value)" style="margin-bottom:10px"><div class="grid">'+S.items.filter(function(i){return i.c==cat&&(cat!='g'||sub=='all'||i.s==sub)}).map(function(i){return'<div class="tile" data-n="'+esc(i.n+' '+i.t).toLowerCase().replace(/"/g,'')+'"><button class="star" aria-label="Shopping list" onclick="tgL('+i.id+')">'+(S.list[i.id]!=null?'★':'☆')+'</button><button class="tb" onclick="openItem('+i.id+')"><span class="e">'+esc(i.e)+'</span><b>'+esc(i.n)+'</b><small>'+esc(i.t)+'</small><small class="pr">'+rs(i.p)+'/'+per(i)+'</small></button></div>'}).join('')+'</div>';
+h+='<div class="card" id="cart"><b>🛒 Cart · கூடை</b><div class="mut" style="font-size:14px">Change quantity or price in any row. The total updates.</div>';
+if(!L.length)h+='<p class="mut">Empty. Tap a picture above to add items one by one.</p>';
+h+=L.map(cartRow).join('');
+return h+'<div class="row"><b>Total</b><b class="big out" style="font-size:26px">'+rs(spent(td))+'</b></div></div>'}
+function cartRow(b){var top='<span style="flex:1;min-width:120px">'+esc(b.e)+' <b>'+esc(b.n)+'</b></span><b>'+rs(b.c)+'</b><button class="x" aria-label="Delete" onclick="delBuy('+b.id+')">✕</button>';
+if(b.g==null)return'<div class="row"><span style="flex:1">'+esc(b.e)+' '+esc(b.n)+' <small>'+esc(b.q)+'</small></span><b>'+rs(b.c)+'</b><button class="x" aria-label="Delete" onclick="delBuy('+b.id+')">✕</button></div>';
+var ul=b.u=='pc'?'pieces':b.u=='L'?'ml':'grams',pu=b.u=='pc'?'piece':b.u;
+return'<div class="row" style="flex-wrap:wrap">'+top+'<label style="flex:1"><small>Quantity ('+ul+')</small><input type="number" inputmode="decimal" value="'+b.g+'" onchange="editBuy('+b.id+',\'g\',this.value)"></label><label style="flex:1"><small>Price ₹ per '+pu+'</small><input type="number" inputmode="decimal" value="'+b.p+'" onchange="editBuy('+b.id+',\'p\',this.value)"></label></div>'}
+function editBuy(id,f,v){var b=S.buys.filter(function(x){return x.id==id})[0];if(!b)return;b[f]=Number(v)||0;b.q=un({u:b.u},b.g);b.c=Math.round(cost({u:b.u,p:b.p},b.g)*100)/100;save();render()}
+function openItem(id){sel=S.items.filter(function(i){return i.id==id})[0];gm=0;sheet()}
+function sheet(){var it=sel,pc=it.u=='pc',w=pc?[1,2,3,4,5,6,10]:[100,250,500,750,1000,1500,2000],c=cost(it,gm);
+document.getElementById('sh').innerHTML='<div class="row"><b style="font-size:22px">'+esc(it.e)+' '+esc(it.n)+' · '+esc(it.t)+'</b><button class="x" onclick="closeS()">✕</button></div><div class="row"><span>Price today · இன்றைய விலை<br><small>₹ per '+per(it)+'</small></span><span style="width:120px"><input type="number" inputmode="decimal" value="'+it.p+'" oninput="setPr(this.value)" aria-label="Price today"></span></div><div class="chips">'+w.map(function(x){return'<button class="chip '+(gm==x?'on':'')+'" onclick="setG('+x+')">'+un(it,x)+'</button>'}).join('')+'</div><input id="cg" type="number" inputmode="decimal" min="0" placeholder="Other '+(pc?'quantity':'amount in '+(it.u=='L'?'ml':'grams'))+'" oninput="setG(this.value,1)"><div class="tc" style="padding:12px"><div style="color:var(--mut)">'+un(it,gm||0)+'</div><div class="big">'+rs(c)+'</div></div><button class="btn" onclick="addBuy()">Add to today · சேர்</button>'
+document.getElementById('sheet').classList.add('show')}
+function setG(v,k){gm=Number(v)||0;if(k){var c=cost(sel,gm),el=document.querySelector('#sh .big');if(el)el.textContent=rs(c);document.querySelectorAll('#sh .chip').forEach(function(x){x.classList.remove('on')});return}sheet()}
+function closeS(){document.getElementById('sheet').classList.remove('show');render()}
+function setPr(v){sel.p=Number(v)||0;save();var el=document.querySelector('#sh .big');if(el)el.textContent=rs(cost(sel,gm))}
+function addBuy(){if(!gm)return;S.buys.push({id:Date.now(),d:today(),n:sel.n,e:sel.e,k:sel.c,u:sel.u,g:gm,p:sel.p,q:un(sel,gm),c:Math.round(cost(sel,gm)*100)/100});if(S.list[sel.id]!=null)S.list[sel.id]=1;save();closeS();render()}
+function delBuy(id){S.buys=S.buys.filter(function(b){return b.id!=id});save();render()}
+function vPrice(){var UO=[['kg','per kg'],['L','per litre'],['pc','per piece']];
+var h='<p style="color:var(--mut)">Change name, price, unit (kg, litre or piece) and section of any item. Tap ✕ twice to delete.</p>';
+CATS.forEach(function(c){h+='<div class="hd">'+c[1]+' '+c[2]+' · '+c[3]+'</div><div class="card">'+S.items.filter(function(i){return i.c==c[0]}).map(function(i){return'<div class="irow"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:30px">'+esc(i.e)+'</span><input value="'+esc(i.n).replace(/"/g,'&quot;')+'" onchange="setI('+i.id+',\'n\',this.value)" aria-label="Name"><button class="x" aria-label="Delete item" onclick="delI('+i.id+')">'+(pd==i.id?'Delete?':'✕')+'</button></div><div class="g3"><input type="number" inputmode="decimal" value="'+i.p+'" onchange="setI('+i.id+',\'p\',this.value)" aria-label="Price"><select onchange="setI('+i.id+',\'u\',this.value)" aria-label="Unit">'+UO.map(function(u){return'<option value="'+u[0]+'"'+(i.u==u[0]?' selected':'')+'>'+u[1]+'</option>'}).join('')+'</select><select onchange="setI('+i.id+',\'c\',this.value)" aria-label="Section">'+CATS.map(function(k){return'<option value="'+k[0]+'"'+(i.c==k[0]?' selected':'')+'>'+k[1]+' '+k[2]+'</option>'}).join('')+'</select>'+(i.c=='g'?'<select style="grid-column:span 3" onchange="setI('+i.id+',\'s\',this.value)" aria-label="Group">'+SUBS.slice(1).map(function(x){return'<option value="'+x[0]+'"'+(i.s==x[0]?' selected':'')+'>'+x[1]+'</option>'}).join('')+'</select>':'')+'</div></div>'}).join('')+'</div>'});
+h+='<div class="card"><b>Add new item · புதிய பொருள்</b><div style="display:grid;gap:8px;margin-top:8px"><input id="nn" placeholder="Name (e.g. Cloth Soap)"><input id="ne" placeholder="Emoji (e.g. 🧼)"><select id="nc">'+CATS.map(function(c){return'<option value="'+c[0]+'"'+(c[0]==cat?' selected':'')+'>'+c[1]+' '+c[2]+'</option>'}).join('')+'</select><select id="nu">'+UO.map(function(u){return'<option value="'+u[0]+'">'+u[1]+'</option>'}).join('')+'</select><select id="ns" aria-label="Groceries group">'+SUBS.slice(1).map(function(x){return'<option value="'+x[0]+'">'+x[1]+'</option>'}).join('')+'</select><input id="np" type="number" inputmode="decimal" placeholder="Price ₹"><button class="btn" onclick="addItem()">Add item</button></div></div>';return h}
+function setI(id,f,v){S.items.forEach(function(i){if(i.id==id)i[f]=f=='p'?(Number(v)||0):v});save();if(f=='c'||f=='u')render()}
+function delI(id){if(pd!=id){pd=id;render();return}S.items=S.items.filter(function(i){return i.id!=id});pd=null;save();render()}
+function setP(id,v){S.items.forEach(function(i){if(i.id==id)i.p=Number(v)||0});save()}
+function addItem(){var n=document.getElementById('nn').value.trim();if(!n)return;S.items.push({id:Date.now(),n:n,t:'',e:document.getElementById('ne').value.trim()||'🛒',p:Number(document.getElementById('np').value)||0,c:document.getElementById('nc').value,u:document.getElementById('nu').value,s:document.getElementById('ns').value});cat=document.getElementById('nc').value;save();render()}
+function vSoda(){var td=today(),c=S.soda[td]||0;
+return'<div class="card tc"><div style="color:var(--mut)">Goli soda sold today · இன்று விற்றது</div><div class="big" style="font-size:64px">'+c+'</div><div style="display:flex;justify-content:center;gap:28px;margin:10px 0"><button class="sodabtn m" aria-label="Minus one" onclick="sd(-1)">−</button><button class="sodabtn" aria-label="Plus one" onclick="sd(1)">+</button></div><div style="color:var(--mut)">Income · வருமானம்</div><div class="big in">'+rs(c*S.sp)+'</div></div><div class="card"><b>Price of 1 soda</b><input type="number" inputmode="decimal" value="'+S.sp+'" onchange="S.sp=Number(this.value)||0;save();render()" style="margin-top:8px"></div><div class="card"><b>Add many at once</b><div class="chips">'+[5,10,20].map(function(n){return'<button class="chip" onclick="sd('+n+')">+'+n+'</button>'}).join('')+'</div></div>'}
+function sd(n){var td=today();S.soda[td]=Math.max(0,(S.soda[td]||0)+n);save();render()}
+function vToday(){var td=today(),c=S.soda[td]||0,inc=c*S.sp,sp=spent(td),b=inc-sp;
+var h='<div class="card tc"><div style="color:var(--mut)">Balance · மீதம்</div><div class="big '+(b>=0?'in':'out')+'">'+(b<0?'−':'')+rs(Math.abs(b))+'</div></div><div class="card"><div class="row"><span>🥤 Soda income ('+c+' sold)</span><b class="in">'+rs(inc)+'</b></div><div class="row"><span>🛒 Total spent</span><b class="out">'+rs(sp)+'</b></div>'+CATS.map(function(c){var t=S.buys.filter(function(b){return b.d==td&&(b.k||'v')==c[0]}).reduce(function(a,b){return a+b.c},0);return t?'<div class="row"><small>'+c[1]+' '+c[2]+'</small><small>'+rs(t)+'</small></div>':''}).join('')+'</div><div class="card tbl"><b>Last 7 days · கடந்த 7 நாள்</b>';
+for(var i=0;i<7;i++){var d=new Date();d.setDate(d.getDate()-i);var k=today(d),s=S.soda[k]||0,e=spent(k);h+='<div class="row"><span>'+k.slice(5)+'<br><small>'+s+' soda</small></span><span style="text-align:right"><span class="in">+'+rs(s*S.sp)+'</span><br><span class="out">−'+rs(e)+'</span></span></div>'}
+return h+'</div><button class="btn" onclick="savePdf(today())">📄 Save today bill (PDF)</button>'}
+var FC={in:[['Daily wages','💼'],['Other income','💰'],['Gift','🎁']],out:[['Rent','🏠'],['Electricity','💡'],['Transport','🚌'],['Mobile','📱'],['Medical','💊'],['Education','📚'],['Other','🧾']]},ft='out',fc='Rent';
+function finT(p,t){return S.fin.filter(function(x){return x.t==t&&x.d.indexOf(p)==0}).reduce(function(a,x){return a+x.a},0)}
+function sodaT(p){var a=0;for(var k in S.soda)if(k.indexOf(p)==0)a+=S.soda[k]*S.sp;return a}
+function grT(p){return S.buys.filter(function(b){return b.d.indexOf(p)==0}).reduce(function(a,b){return a+b.c},0)}
+function fblock(p,title){var si=sodaT(p),oi=finT(p,'in'),g=grT(p),oe=finT(p,'out'),b=si+oi-g-oe;
+function r(l,v,c){return'<div class="row"><span>'+l+'</span><b class="'+c+'">'+rs(v)+'</b></div>'}
+return'<div class="card"><b>'+title+'</b>'+r('🥤 Soda income',si,'in')+r('💼 Other income',oi,'in')+r('🛒 Groceries',g,'out')+r('💸 Other expenses',oe,'out')+'<div class="row"><b>Balance · மீதம்</b><b class="big '+(b>=0?'in':'out')+'" style="font-size:26px">'+(b<0?'−':'')+rs(Math.abs(b))+'</b></div></div>'}
+function vFin(){var td=today(),L=S.fin.filter(function(x){return x.d==td});
+var h=fblock(td,'Today · இன்று');
+h+='<div class="card"><b>Add entry · புதிய பதிவு</b><div class="chips"><button class="chip '+(ft=='in'?'on':'')+'" onclick="setFT(\'in\')">💰 Income</button><button class="chip '+(ft=='out'?'on':'')+'" onclick="setFT(\'out\')">💸 Expense</button></div><div class="chips">'+FC[ft].map(function(c){return'<button class="chip '+(fc==c[0]?'on':'')+'" onclick="fc=\''+c[0]+'\';render()">'+c[1]+' '+c[0]+'</button>'}).join('')+'</div><div style="display:grid;gap:8px"><input id="fa" type="number" inputmode="decimal" placeholder="Amount ₹"><input id="fn" placeholder="Note (optional)"><button class="btn" onclick="addFin()">Save '+(ft=='in'?'income':'expense')+'</button></div></div>';
+if(L.length)h+='<div class="card"><b>Today entries</b>'+L.map(function(x){return'<div class="row"><span>'+x.e+' '+esc(x.c)+(x.n?'<br><small>'+esc(x.n)+'</small>':'')+'</span><span><b class="'+(x.t=='in'?'in':'out')+'">'+(x.t=='in'?'+':'−')+rs(x.a)+'</b> <button class="x" aria-label="Delete" onclick="delFin('+x.id+')">✕</button></span></div>'}).join('')+'</div>';
+return h+fblock(td.slice(0,7),'This month · இந்த மாதம்')}
+function setFT(t){ft=t;fc=FC[t][0][0];render()}
+function addFin(){var a=Number(document.getElementById('fa').value);if(!(a>0))return;var e=FC[ft].filter(function(c){return c[0]==fc})[0][1];S.fin.push({id:Date.now(),d:today(),t:ft,c:fc,e:e,n:document.getElementById('fn').value.trim(),a:a});save();render()}
+function delFin(id){S.fin=S.fin.filter(function(x){return x.id!=id});save();render()}
+/*PDF*/
+function pd(s,n){s=String(s);while(s.length<n)s+=' ';return s.slice(0,n)}
+function pdf(lines){var per=46,pages=[],i;for(i=0;i<lines.length;i+=per)pages.push(lines.slice(i,i+per));if(!pages.length)pages=[[]];
+var o=[],n=pages.length,kids=pages.map(function(_,i){return(4+2*i)+' 0 R'}).join(' ');
+o[1]='<</Type/Catalog/Pages 2 0 R>>';o[2]='<</Type/Pages/Kids['+kids+']/Count '+n+'>>';o[3]='<</Type/Font/Subtype/Type1/BaseFont/Courier>>';
+pages.forEach(function(p,i){var t='BT /F1 11 Tf 40 800 Td 15 TL\n'+p.map(function(l){return'('+l.replace(/[^\x20-\x7E]/g,'').replace(/([()\\])/g,'\\$1')+') Tj T*'}).join('\n')+'\nET';
+o[4+2*i]='<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Resources<</Font<</F1 3 0 R>>>>/Contents '+(5+2*i)+' 0 R>>';
+o[5+2*i]='<</Length '+t.length+'>>\nstream\n'+t+'\nendstream'});
+var out='%PDF-1.4\n',off=[],k;for(k=1;k<o.length;k++){off[k]=out.length;out+=k+' 0 obj\n'+o[k]+'\nendobj\n'}
+var x=out.length;out+='xref\n0 '+o.length+'\n0000000000 65535 f \n';for(k=1;k<o.length;k++)out+=('0000000000'+off[k]).slice(-10)+' 00000 n \n';
+out+='trailer\n<</Size '+o.length+'/Root 1 0 R>>\nstartxref\n'+x+'\n%%EOF';return new Blob([out],{type:'application/pdf'})}
+/*ENDPDF*/
+function R(n){return'Rs.'+(Math.round(n*100)/100)}
+function billLines(d){var u=getU()[S.uid]||{},sc=S.soda[d]||0,B=S.buys.filter(function(b){return b.d==d}),F=S.fin.filter(function(x){return x.d==d}),g=grT(d),fi=finT(d,'in'),fo=finT(d,'out'),si=sc*S.sp,ln=['DAILY BILL  '+d,'Name: '+(u.n||''),'','GOLI SODA',pd('  Sold',22)+sc+' x '+R(S.sp)+' = '+R(si),'','PURCHASES'];
+B.forEach(function(b){ln.push(pd('  '+b.n,22)+pd(b.q,12)+R(b.c))});if(!B.length)ln.push('  none');ln.push(pd('  Total',34)+R(g),'','OTHER INCOME / EXPENSE');
+F.forEach(function(x){ln.push(pd('  '+x.c+(x.n?' ('+x.n+')':''),34)+(x.t=='in'?'+':'-')+R(x.a))});if(!F.length)ln.push('  none');
+var ti=si+fi,te=g+fo;ln.push('','TOTAL INCOME   '+R(ti),'TOTAL EXPENSE  '+R(te),'BALANCE        '+R(ti-te));return ln}
+function yest(){var d=new Date();d.setDate(d.getDate()-1);return today(d)}
+function dayHas(d){return(S.soda[d]||0)>0||S.buys.some(function(b){return b.d==d})||S.fin.some(function(x){return x.d==d})}
+function checkBill(){if(!S)return;var y=yest(),b=document.getElementById('bn');b.innerHTML=(S.billed!=y&&dayHas(y))?'<div class="bn"><span>📄 Bill for '+y+' is ready</span><button onclick="savePdf(\''+y+'\')">Save PDF</button></div>':''}
+function toast(m){document.getElementById('bn').innerHTML='<div class="bn"><span>'+m+'</span></div>';setTimeout(checkBill,3500)}
+async function savePdf(d){var dl=null;try{dl=window.claude&&await window.claude.use('downloads')}catch(e){}
+if(!dl){try{var bl=pdf(billLines(d)),an=document.createElement('a');an.href=URL.createObjectURL(bl);an.download='Bill-'+d+'.pdf';document.body.appendChild(an);an.click();an.remove();if(d==yest())S.billed=d;save();toast('PDF saved ✔')}catch(e){toast('Could not save the PDF.')}return}
+try{await dl.save({filename:'Bill-'+d+'.pdf',data:pdf(billLines(d))});if(d==yest())S.billed=d;save();toast('PDF saved ✔')}catch(e){toast(e&&e.code=='declined'?'Not saved.':'Could not save the PDF.')}}
+function sched(){clearTimeout(MT);var n=new Date(),m=new Date(n);m.setHours(24,0,5,0);MT=setTimeout(function(){render();checkBill();sched()},m-n)}
+function getU(){try{return JSON.parse(localStorage.getItem('kk_users'))||{}}catch(e){return{}}}
+function nid(v){v=v.trim();if(v.indexOf('@')>-1)return/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)?v.toLowerCase():'';var d=v.replace(/\D/g,'').slice(-10);return d.length==10?d:''}
+async function hs(salt,pw){var b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+pw));return Array.from(new Uint8Array(b)).map(function(x){return('0'+x.toString(16)).slice(-2)}).join('')}
+function showAuth(){var up=AM=='up';document.getElementById('auth').innerHTML='<div class="wrap" style="padding-top:36px"><div class="tc" style="font-size:60px">🧅🥤</div><h1 class="tc">Daily Kanakku · கணக்கு</h1><div class="card"><b>'+(up?'Create account · புதிய கணக்கு':'Sign in · உள்நுழை')+'</b><div style="display:grid;gap:8px;margin-top:10px">'+(up?'<input id="an" placeholder="Your name">':'')+'<input id="ai" inputmode="email" autocomplete="username" placeholder="Phone number or Google email"><input id="ap" type="password" autocomplete="'+(up?'new-password':'current-password')+'" placeholder="Password (min 6)"><div id="ae" class="out" role="alert"></div><button class="btn" onclick="doAuth()">'+(up?'Create account':'Sign in')+'</button><button class="btn o" onclick="AM=\''+(up?'in':'up')+'\';showAuth()">'+(up?'I already have an account':'New user? Create account')+'</button></div></div><p style="color:var(--mut);font-size:13px">Accounts and data stay on this phone only.</p></div>';document.getElementById('auth').style.display='block'}
+async function doAuth(){var e=document.getElementById('ae'),id=nid(document.getElementById('ai').value),pw=document.getElementById('ap').value,U=getU();
+if(!id){e.textContent='Enter a 10-digit phone number or a valid email.';return}
+if(pw.length<6){e.textContent='Password must be at least 6 characters.';return}
+try{if(AM=='up'){if(U[id]){e.textContent='This ID already has an account. Please sign in.';return}
+var first=!Object.keys(U).length,a=new Uint8Array(8);crypto.getRandomValues(a);var salt=Array.from(a).join('-');
+U[id]={n:(document.getElementById('an').value.trim()||id),s:salt,h:await hs(salt,pw)};
+if(first){try{var old=localStorage.getItem(K);if(old)localStorage.setItem(K+'_'+id,old)}catch(x){}}
+localStorage.setItem('kk_users',JSON.stringify(U))}
+else if(!U[id]||(await hs(U[id].s,pw))!=U[id].h){e.textContent='Wrong ID or password.';return}
+localStorage.setItem('kk_session',id);start(id)}catch(x){e.textContent='Could not sign in on this device.'}}
+function start(id){UK=K+'_'+id;S=load();if(!S.fin)S.fin=[];S.uid=id;migrate();tab='home';S.list=S.list||{};document.getElementById('auth').style.display='none';render();checkBill();sched()}
+function logout(){try{localStorage.removeItem('kk_session')}catch(e){}S=null;AM='in';document.getElementById('bn').innerHTML='';showAuth()}
+function boot(){try{var th=localStorage.getItem('kk_theme');if(th)document.documentElement.setAttribute('data-theme',th)}catch(e){}var id=null;try{var th=localStorage.getItem('kk_theme');if(th)document.documentElement.setAttribute('data-theme',th)}catch(e){}try{id=localStorage.getItem('kk_session')}catch(e){}
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&S){checkBill();render()}});
+if(id&&getU()[id])start(id);else{AM=Object.keys(getU()).length?'in':'up';showAuth()}}
+function vHome(){var td=today(),sc=S.soda[td]||0,inc=sodaT(td)+finT(td,'in'),exp=grT(td)+finT(td,'out'),b=inc-exp,hr=new Date().getHours(),nm=(getU()[S.uid]||{}).n||'',L=S.buys.filter(function(x){return x.d==td});
+var gr=hr<12?'Good morning · காலை வணக்கம்':hr<17?'Good afternoon · மதிய வணக்கம்':'Good evening · மாலை வணக்கம்';
+var h='<div class="hero"><small>'+gr+', '+esc(nm)+'</small><div class="hb">'+(b<0?'−':'')+rs(Math.abs(b))+'</div><small>Today balance · இன்றைய மீதம்</small><div class="hs"><div><small>Income</small><b>'+rs(inc)+'</b></div><div><small>Spent</small><b>'+rs(exp)+'</b></div><div><small>Sodas</small><b>'+sc+'</b></div></div></div>';
+h+='<div class="qa"><button onclick="go(\'buy\')"><span>🛒</span>Buy</button><button onclick="sd(1)"><span>🥤</span>+1 Soda</button><button onclick="ft=\'out\';fc=\'Rent\';go(\'fin\')"><span>💸</span>Expense</button><button onclick="go(\'list\')"><span>📝</span>List</button></div>';
+if(L.length)h+='<div class="card" onclick="go(\'buy\')" style="cursor:pointer"><div class="row" style="border:0"><span>🛒 Cart: <b>'+L.length+' items</b></span><b class="out">'+rs(spent(td))+'</b></div></div>';
+var days=[],mx=1;for(var i=6;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);var k=today(d),a=sodaT(k)+finT(k,'in'),e=grT(k)+finT(k,'out');mx=Math.max(mx,a,e);days.push([d.toLocaleDateString('en',{weekday:'short'}),a,e])}
+h+='<div class="card"><b>Last 7 days · கடந்த 7 நாள்</b><div class="ch">'+days.map(function(x){return'<div class="cc"><div class="bars"><i class="bi" style="height:'+Math.round(x[1]/mx*100)+'%"></i><i class="be" style="height:'+Math.round(x[2]/mx*100)+'%"></i></div><small>'+x[0]+'</small></div>'}).join('')+'</div><div class="lg"><span class="in">■ Income</span> &nbsp; <span class="out">■ Spent</span></div></div>';
+return h+fblock(td.slice(0,7),'This month · இந்த மாதம்')+'<button class="btn o" onclick="savePdf(today())">📄 Save today bill (PDF)</button>'}
+function vMore(){var dk=document.documentElement.getAttribute('data-theme')=='dark';
+return'<div class="menu">'+[['price','🏷️','Prices & Items','Edit, add, delete'],['list','📝','Shopping List','பட்டியல்'],['calc','🧮','Calculator','கணக்கு']].map(function(m){return'<button onclick="go(\''+m[0]+'\')"><span>'+m[1]+'</span><b>'+m[2]+'</b><small>'+m[3]+'</small></button>'}).join('')+'<button onclick="savePdf(today())"><span>📄</span><b>Save today bill</b><small>PDF</small></button><button onclick="thm()"><span>'+(dk?'☀️':'🌙')+'</span><b>'+(dk?'Light mode':'Dark mode')+'</b><small>Theme</small></button><button onclick="logout()"><span>🚪</span><b>Sign out</b><small>வெளியேறு</small></button></div>'}
+function thm(){var r=document.documentElement,n=r.getAttribute('data-theme')=='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('kk_theme',n)}catch(e){}render()}
+function tgL(id){if(S.list[id]!=null)delete S.list[id];else S.list[id]=0;save();render()}
+function ckL(id,v){S.list[id]=v?1:0;save();render()}
+function clrL(){for(var k in S.list)if(S.list[k])delete S.list[k];save();render()}
+function vList(){var L=S.items.filter(function(i){return S.list[i.id]!=null}),h='<p class="mut">Tap ☆ on any item in Buy to add it here. Tick ✔ when bought.</p>';
+if(!L.length)h+='<div class="card tc" style="font-size:40px">📝<div style="font-size:16px">Your list is empty.</div><button class="btn" onclick="go(\'buy\')">Go to Buy</button></div>';
+CATS.forEach(function(c){var X=L.filter(function(i){return i.c==c[0]});if(X.length)h+='<div class="hd">'+c[1]+' '+c[2]+'</div><div class="card">'+X.map(function(i){var dn=S.list[i.id];return'<div class="row"><label style="display:flex;align-items:center;gap:10px;flex:1"><input type="checkbox" '+(dn?'checked':'')+' onchange="ckL('+i.id+',this.checked)"><span style="'+(dn?'text-decoration:line-through;color:var(--mut)':'')+'">'+esc(i.e)+' '+esc(i.n)+'</span></label><button class="chip" onclick="openItem('+i.id+')">＋ Cart</button><button class="x" aria-label="Remove" onclick="tgL('+i.id+')">✕</button></div>'}).join('')+'</div>'});
+return h+(L.length?'<button class="btn o" onclick="clrL()">Clear ticked items</button>':'')}
+var ex='';
+function vCalc(){var k=['7','8','9','÷','4','5','6','×','1','2','3','−','0','.','C','+'];
+return'<div class="card tc"><div style="min-height:28px;color:var(--mut)" id="cx">'+esc(ex)+'</div><div class="big" id="cr">'+esc(ev(ex))+'</div></div><div class="keys">'+k.map(function(x){return'<button onclick="key(\''+x+'\')">'+x+'</button>'}).join('')+'<button onclick="key(\'⌫\')">⌫</button><button style="grid-column:span 3;background:var(--g);color:#fff" onclick="key(\'=\')">=</button></div>'}
+function ev(s){var t=s.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-');if(!t||!/^[0-9+\-*/.]+$/.test(t)||/[+\-*/.]$/.test(t))return'';try{var r=Function('return '+t)();return isFinite(r)?String(Math.round(r*100)/100):''}catch(e){return''}}
+function key(x){if(x=='C')ex='';else if(x=='⌫')ex=ex.slice(0,-1);else if(x=='=')ex=ev(ex)||ex;else ex+=x;document.getElementById('cx').textContent=ex;document.getElementById('cr').textContent=ev(ex)}
+if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js')}catch(e){}}
+boot();
+</script>
+</body>
+</html>
